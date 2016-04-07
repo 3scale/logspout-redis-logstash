@@ -1,5 +1,6 @@
 # logspout-redis-logstash
 [Logspout](https://github.com/gliderlabs/logspout) adapter for writing Docker container stdout/stderr logs to Redis in Logstash jsonevent layout.
+This code sends as a name, the MARATHON_APP_ID if the container has this environment variable. This has been done because in a Mesos/Marathon cluster we need to know the app that a container belongs to and this variable is the one that it contains the value
 
 Since v0.1.4 JSON input is supported, enabling you to add structure to your logs.
 

@@ -222,10 +222,23 @@ func splitImage(image_tag string) (image string, tag string) {
 	return
 }
 
+func search_marathon_app(envs []string) string {
+  for i:= 0; i < len(envs); i++ {
+    if strings.Split(envs[i], "=")[0] == "MARATHON_APP_ID" {
+      return strings.Split(envs[i], "=")[1]
+    }
+  }
+  return ""
+}
+
 func createLogstashMessage(m *router.Message, docker_host string, use_v0 bool, logstash_type string) ([]byte, error) {
 	image, image_tag := splitImage(m.Container.Config.Image)
 	cid := m.Container.ID[0:12]
+    marathon_app := search_marathon_app(m.Container.Config.Env)
 	name := m.Container.Name[1:]
+    if marathon_app != "" {
+      name = marathon_app
+    }
 	timestamp := m.Time.UTC().Format(time.RFC3339Nano)
 
 	if use_v0 {
