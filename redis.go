@@ -224,7 +224,7 @@ func splitImage(image_tag string) (image string, tag string) {
 
 func search_marathon_app(envs []string) string {
   for i:= 0; i < len(envs); i++ {
-    if strings.Split(envs[i], "=")[0] == "MARATHON_APP_ID" {
+    if strings.Split(envs[i], "=")[0] == "MARATHON_APP_ID" || strings.Split(envs[i], "=")[0] == "MESOS_EXECUTOR_ID"  {
       return strings.Split(envs[i], "=")[1]
     }
   }
